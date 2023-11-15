@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper接口名对应-->
+<mapper namespace="com.sungeon.bos.mapper.AccessTokenAndCustomerMapper">
+
+    <insert id="insertCustomer">
+		<selectKey keyProperty="id" order="BEFORE" resultType="Long">
+			SELECT get_sequences('c_customer_flowinfo') AS id FROM dual
+		</selectKey>
+        insert into c_customer_flowinfo(id,storeIdUuid,storeCode,name,realTime,indoorCount,outdoorCount,
+										statDimensionDayTime,statDimensionHourTime,outsum,
+										areaCode,areaName,storeAreaIdUuid)
+        values(#{id},
+			   #{storeIdUuid, javaType=String, jdbcType=VARCHAR},
+			   #{storeCode, javaType=String, jdbcType=VARCHAR},
+			   #{name, javaType=String, jdbcType=VARCHAR},
+			   #{realTime, javaType=String, jdbcType=VARCHAR},
+		       #{indoorCount, javaType=Long, jdbcType=BIGINT},
+		       #{outdoorCount, javaType=Long, jdbcType=BIGINT},
+			   #{statDimensionDayTime, javaType=String, jdbcType=VARCHAR},
+			   #{statDimensionHourTime, javaType=String, jdbcType=VARCHAR},
+			   #{outsum, javaType=Long, jdbcType=BIGINT},
+			   #{areaCode, javaType=String, jdbcType=VARCHAR},
+			   #{areaName, javaType=String, jdbcType=VARCHAR},
+			   #{storeAreaIdUuid, javaType=String, jdbcType=VARCHAR})
+    </insert>
+</mapper>
