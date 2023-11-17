@@ -11,7 +11,7 @@
 		</selectKey>
         insert into c_customer_flowinfo(id,storeIdUuid,storeCode,name,realTime,indoorCount,outdoorCount,
 										statDimensionDayTime,statDimensionHourTime,outsum,
-										areaCode,areaName,storeAreaIdUuid)
+										areaCode,areaName,storeAreaIdUuid,syCount,multiInfo)
         values(#{id},
 			   #{storeIdUuid, javaType=String, jdbcType=VARCHAR},
 			   #{storeCode, javaType=String, jdbcType=VARCHAR},
@@ -24,6 +24,8 @@
 			   #{outsum, javaType=Long, jdbcType=BIGINT},
 			   #{areaCode, javaType=String, jdbcType=VARCHAR},
 			   #{areaName, javaType=String, jdbcType=VARCHAR},
-			   #{storeAreaIdUuid, javaType=String, jdbcType=VARCHAR})
+			   #{storeAreaIdUuid, javaType=String, jdbcType=VARCHAR},
+			   #{syCount, javaType=Long, jdbcType=BIGINT},
+			   #{multiInfo,javaType=String, jdbcType=VARCHAR})
     </insert>
 </mapper>

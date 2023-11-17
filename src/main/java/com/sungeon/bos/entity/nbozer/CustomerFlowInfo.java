@@ -1,9 +1,12 @@
 package com.sungeon.bos.entity.nbozer;
 
+import com.sungeon.bos.entity.MultiInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * @BelongsPackage: com.sungeon.bos.entity.nbozer
@@ -45,4 +48,9 @@ public class CustomerFlowInfo {
 	private String areaName;
 	// 门店区域Id
 	private String storeAreaIdUuid;
+	// 试衣人数
+	private Long syCount;
+	// 多维数据
+	private List<MultiInfo> multiInfoList;
+	private String multiInfo;
 }

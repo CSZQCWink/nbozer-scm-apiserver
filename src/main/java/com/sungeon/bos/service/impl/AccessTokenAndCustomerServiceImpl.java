@@ -4,6 +4,8 @@ package com.sungeon.bos.service.impl;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.sungeon.bos.dao.AccessTokenAndCustomerDao;
+import com.sungeon.bos.entity.AreaInfo;
+import com.sungeon.bos.entity.SYCount;
 import com.sungeon.bos.entity.nbozer.CustomerFlowInfo;
 import com.sungeon.bos.service.AccessTokenAndCustomerService;
 import com.sungeon.bos.util.DateConvertUtil;
@@ -93,9 +95,100 @@ public class AccessTokenAndCustomerServiceImpl implements AccessTokenAndCustomer
 		String contentInfo = jsonObjectCustomerFlowInfo.get("content").toString();
 		// 将其转变为List集合 集合元素内容为CustomerFlowInfo类型
 		List<CustomerFlowInfo> customerFlowInfoList = JSON.parseArray(contentInfo, CustomerFlowInfo.class);
+
+		log.info("-----------------------------通过门店id获取区域id------------------------------------");
+		for (CustomerFlowInfo customerFlowInfo : customerFlowInfoList) {
+			// 获取门店id
+			String storeIdUuid = customerFlowInfo.getStoreIdUuid();
+			// 请求地址
+			String urlGetAreaIdByStoreId = "https://yd.yunding360.com/openapi/storeArea/findAllStoreArea";
+			// 将门店id作为请求体
+			JSONObject jsonObjectGetAreaIdByStoreId = new JSONObject();
+			jsonObjectGetAreaIdByStoreId.put("storeId", storeIdUuid);
+			String jsonBodyGetAreaIdByStoreId = jsonObjectGetAreaIdByStoreId.toString();
+			// 发送请求
+			String strGetAreaIdByStoreId = HttpRequest.post(urlGetAreaIdByStoreId)
+					.header("Content-Type", "application/json")
+					.header("Authorization", authorization)
+					.header("api-version", "v1")
+					.body(jsonBodyGetAreaIdByStoreId)
+					.execute()
+					.body();
+			// 将String类型的响应数据转变为JSONObject
+			com.alibaba.fastjson.JSONObject jsonObjectGetAreaInfo = JSON.parseObject(strGetAreaIdByStoreId);
+			// 通过键获取主要的JSON内容并转变为String类型
+			String contentAreaInfo = jsonObjectGetAreaInfo.get("content").toString();
+			List<AreaInfo> areaInfos = JSON.parseArray(contentAreaInfo, AreaInfo.class);
+
+			for (AreaInfo areaInfo : areaInfos) {
+				if ("SY".equals(areaInfo.getAreaCode())) {
+					System.out.println(areaInfo.getId());
+					customerFlowInfo.setStoreAreaIdUuid(areaInfo.getId());
+				}
+			}
+
+			log.info("-----------------------------通过区域id获取试衣数------------------------------------");
+			// 区域id
+			String storeAreaIdUuid = customerFlowInfo.getStoreAreaIdUuid();
+			ArrayList<String> storeAreaIdUuidList = new ArrayList<>();
+			storeAreaIdUuidList.add(storeAreaIdUuid);
+			// 请求地址
+			String urlGetSYCount = "https://yd.yunding360.com/openapi/store/customerFlow/getDataByModifyTime";
+			// 请求体
+			JSONObject jsonObjectGetSYCount = new JSONObject();
+			jsonObjectGetSYCount.put("areaIds", storeAreaIdUuidList);
+			jsonObjectGetSYCount.put("startModifyTime", startModifyTime);
+			jsonObjectGetSYCount.put("endModifyTime", endModifyTime);
+			jsonObjectGetSYCount.put("timeType", "DAY");
+			String jsonBodyGetSYCount = jsonObjectGetSYCount.toString();
+			// 发送请求 获取响应值
+			String strGetSYCount = HttpRequest.post(urlGetSYCount)
+					.header("Authorization", authorization)
+					.header("api-version", "v2")
+					.body(jsonBodyGetSYCount)
+					.execute()
+					.body();
+			// 将String类型的响应数据转变为JSONObject
+			com.alibaba.fastjson.JSONObject jsonBojectstrGetSYCount = JSON.parseObject(strGetSYCount);
+			// 通过键获取主要的JSON内容并转变为String类型
+			String contentSYCount = jsonBojectstrGetSYCount.get("content").toString();
+			List<SYCount> syCounts = JSON.parseArray(contentSYCount, SYCount.class);
+			for (SYCount syCount : syCounts) {
+				customerFlowInfo.setSyCount(syCount.getIndoorCount());
+			}
+
+
+			log.info("-----------------------------根据门店id获取客流多维度数据------------------------------------");
+			String urlGetMulti = "https://yd.yunding360.com/openapi/customer_flow/dimensions/multi";
+			JSONObject jsonObjectGetMulti = new JSONObject();
+			jsonObjectGetMulti.put("storeId", storeIdUuid);
+			jsonObjectGetMulti.put("startModifyTime", startModifyTime);
+			jsonObjectGetMulti.put("endModifyTime", endModifyTime);
+			jsonObjectGetMulti.put("mainDimension", "AGE");
+			jsonObjectGetMulti.put("contrastDimension", "GENDER");
+			jsonObjectGetMulti.put("queryDimension", "STORE");
+			String jsonBodyGetMulti = jsonObjectGetMulti.toString();
+
+			String strGetMulti = HttpRequest.post(urlGetMulti)
+					.header("Authorization", authorization)
+					.header("api-version", "v1")
+					.header("Content-Type", "application/json")
+					.body(jsonBodyGetMulti)
+					.execute()
+					.body();
+			// log.info("响应："+strGetMulti);
+			// 将String类型的响应数据转变为JSONObject
+			com.alibaba.fastjson.JSONObject jsonBojectstrGetMulti = JSON.parseObject(strGetMulti);
+			// 通过键获取主要的JSON内容并转变为String类型
+			String contentGetMulti = jsonBojectstrGetMulti.get("content").toString();
+			customerFlowInfo.setMultiInfo(contentGetMulti);
+//			List<MultiInfo> multiInfoList = JSON.parseArray(contentGetMulti, MultiInfo.class);
+//			customerFlowInfo.setMultiInfoList(multiInfoList);
+		}
 		for (CustomerFlowInfo customerFlowInfo : customerFlowInfoList) {
 			accessTokenAndCustomerDao.insertCustomer(customerFlowInfo);
 		}
+
 		return customerFlowInfoList;
 	}
 }
