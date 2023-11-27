@@ -1,4 +1,4 @@
-package com.sungeon.bos.entity;
+package com.sungeon.bos.entity.nbozer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,5 +41,5 @@ public class Token {
 	// 用户原始id
 	private String originalId;
 	// 企业信息
-	private List<com.sungeon.bos.entity.CompanyInfo> enterprise;
+	private List<CompanyInfo> enterprise;
 }

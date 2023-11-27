@@ -164,10 +164,10 @@ public class BaseServiceImpl implements IBaseService {
 		}
 	}
 
-	@Override
-	public BosResult testProcedure(int id) {
-		return baseDao.testProcedure(id);
-	}
+//	@Override
+//	public BosResult testProcedure(int id) {
+//		return baseDao.testProcedure(id);
+//	}
 
 	@Autowired
 	private TransactionHandler transactionHandler;

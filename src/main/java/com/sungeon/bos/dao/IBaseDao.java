@@ -64,6 +64,6 @@ public interface IBaseDao {
 
 	Integer insertAccessToken(AccessToken accessToken);
 
-	BosResult testProcedure(int id);
+//	BosResult testProcedure(int id);
 
 }

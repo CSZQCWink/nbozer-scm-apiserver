@@ -139,11 +139,7 @@
 		WHERE t.id = #{job.id}
 	</update>
 	
-	<select id="testProcedure" statementType="CALLABLE">
-		{call test_procedure(#{id, mode=IN, jdbcType=INTEGER},
-			#{code, mode=OUT, jdbcType=INTEGER}, 
-			#{message, mode=OUT, jdbcType=VARCHAR})}
-	</select>
+
 
 	<insert id="insertInterfaceLog" parameterType="InterfaceLog" keyProperty="id">
 		<selectKey keyProperty="id" order="BEFORE" resultType="Long">

@@ -161,20 +161,20 @@ public class BaseDaoImpl implements IBaseDao {
 		return baseMapper.insertAccessToken(accessToken);
 	}
 
-	@Override
-	public BosResult testProcedure(int id) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		BosResult result = new BosResult();
-		try {
-			map.put("id", id);
-			baseMapper.testProcedure(map);
-			JSONObject res = (JSONObject) JSON.toJSON(map);
-			result = JSONObject.parseObject(res.toString(), BosResult.class);
-		} catch (Exception e) {
-			result.setCode(-1);
-			result.setMessage(e.getMessage());
-		}
-		return result;
-	}
+//	@Override
+//	public BosResult testProcedure(int id) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		BosResult result = new BosResult();
+//		try {
+//			map.put("id", id);
+//			baseMapper.testProcedure(map);
+//			JSONObject res = (JSONObject) JSON.toJSON(map);
+//			result = JSONObject.parseObject(res.toString(), BosResult.class);
+//		} catch (Exception e) {
+//			result.setCode(-1);
+//			result.setMessage(e.getMessage());
+//		}
+//		return result;
+//	}
 
 }

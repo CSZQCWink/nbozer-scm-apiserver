@@ -1,6 +1,7 @@
 package com.sungeon.bos.mapper;
 
 import com.sungeon.bos.entity.nbozer.CustomerFlowInfo;
+import com.sungeon.bos.entity.nbozer.MultiInfoItem;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,5 +14,11 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AccessTokenAndCustomerMapper {
+	// 获取主表的id
+	Long getId();
+	// 添加客流数据
 	Integer insertCustomer(CustomerFlowInfo customerFlowInfo);
+
+	// 添加多维数据明细
+	Integer insertMultiInfo(MultiInfoItem multiInfoItem);
 }

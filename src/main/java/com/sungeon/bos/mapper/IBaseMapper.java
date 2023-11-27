@@ -64,6 +64,5 @@ public interface IBaseMapper {
 
 	Integer insertAccessToken(AccessToken accessToken);
 
-	Map<String, Object> testProcedure(Map<String, Object> map);
 
 }

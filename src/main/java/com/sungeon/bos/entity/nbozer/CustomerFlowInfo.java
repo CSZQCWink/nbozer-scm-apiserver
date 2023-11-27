@@ -1,6 +1,5 @@
 package com.sungeon.bos.entity.nbozer;
 
-import com.sungeon.bos.entity.MultiInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

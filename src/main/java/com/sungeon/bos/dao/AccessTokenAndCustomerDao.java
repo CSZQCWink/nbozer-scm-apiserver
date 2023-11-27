@@ -1,6 +1,8 @@
 package com.sungeon.bos.dao;
 
 import com.sungeon.bos.entity.nbozer.CustomerFlowInfo;
+import com.sungeon.bos.entity.nbozer.MultiInfoItem;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,4 +16,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccessTokenAndCustomerDao {
 	Integer insertCustomer(CustomerFlowInfo customerFlowInfo);
+
+	// 获取主表的id
+//	Long getId(@Param("id") Long id);
+
+	// 添加多维数据明细
+	Integer insertMultiInfo(MultiInfoItem multiInfoItem);
 }

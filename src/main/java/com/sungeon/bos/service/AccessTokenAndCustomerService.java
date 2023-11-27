@@ -16,4 +16,5 @@ import java.util.List;
 @Service
 public interface AccessTokenAndCustomerService {
 	List<CustomerFlowInfo> getAccessTokenAndCustomer(String startTime) throws Exception;
+
 }

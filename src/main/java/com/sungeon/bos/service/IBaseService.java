@@ -59,7 +59,7 @@ public interface IBaseService {
 
 	boolean verifyAccessToken(String appId, String accessToken);
 
-	BosResult testProcedure(int id);
+//	BosResult testProcedure(int id);
 
 	void testSw();
 
