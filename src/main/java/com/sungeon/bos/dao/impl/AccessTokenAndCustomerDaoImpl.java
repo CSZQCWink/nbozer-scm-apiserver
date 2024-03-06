@@ -1,6 +1,7 @@
 package com.sungeon.bos.dao.impl;
 
 import com.sungeon.bos.dao.AccessTokenAndCustomerDao;
+import com.sungeon.bos.entity.BosResult;
 import com.sungeon.bos.entity.nbozer.CustomerFlowInfo;
 import com.sungeon.bos.entity.nbozer.MultiInfoItem;
 import com.sungeon.bos.mapper.AccessTokenAndCustomerMapper;
@@ -35,5 +36,12 @@ public class AccessTokenAndCustomerDaoImpl implements AccessTokenAndCustomerDao 
 	@Override
 	public Integer insertMultiInfo(MultiInfoItem multiInfoItem) {
 		return accessTokenAndCustomerMapper.insertMultiInfo(multiInfoItem);
+	}
+
+	@Override
+	public BosResult callCustomerFlowinfoAC(Long id) {
+		BosResult result = new BosResult();
+		accessTokenAndCustomerMapper.callPurchaseItemAm(id);
+		return result;
 	}
 }

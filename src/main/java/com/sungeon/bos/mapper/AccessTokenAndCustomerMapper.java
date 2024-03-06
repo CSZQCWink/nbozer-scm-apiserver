@@ -21,4 +21,6 @@ public interface AccessTokenAndCustomerMapper {
 
 	// 添加多维数据明细
 	Integer insertMultiInfo(MultiInfoItem multiInfoItem);
+
+	void callPurchaseItemAm(Long id);
 }

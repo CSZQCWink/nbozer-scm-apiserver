@@ -161,6 +161,7 @@ public class AccessTokenAndCustomerServiceImpl implements AccessTokenAndCustomer
 
 		for (CustomerFlowInfo customerFlowInfo1 : customerFlowInfoList) {
 			accessTokenAndCustomerDao.insertCustomer(customerFlowInfo1);
+			accessTokenAndCustomerDao.callCustomerFlowinfoAC(customerFlowInfo1.getId());
 			log.info("主表的数据"+customerFlowInfo1);
 		}
 

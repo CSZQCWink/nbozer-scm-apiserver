@@ -9,15 +9,31 @@
         FROM c_customer_flowinfo ccf
     </select>
 
+    <select id="callPurchaseItemAm" statementType="CALLABLE">
+        {call C_CUSTOMER_FLOWINFO_AC(
+                #{id, mode=IN, jdbcType=BIGINT}
+            )}
+    </select>
+
     <insert id="insertCustomer">
         <selectKey keyProperty="id" order="BEFORE" resultType="Long">
             SELECT get_sequences('c_customer_flowinfo') AS id FROM dual
         </selectKey>
-        insert into c_customer_flowinfo(id, ad_client_id, ad_org_id, ownerid, modifierid, creationdate, modifieddate,
-        isactive,
-        storeIdUuid,storeCode,name,realTime,indoorCount,outdoorCount,
-        statDimensionDayTime,statDimensionHourTime,outsum,
-        areaCode,areaName,storeAreaIdUuid,syCount,multiInfo)
+        insert into c_customer_flowinfo(id, ad_client_id, ad_org_id, ownerid, modifierid, creationdate, modifieddate,isactive,
+                                        storeIdUuid,
+                                        storeCode,
+                                        name,
+                                        realTime,
+                                        indoorCount,
+                                        outdoorCount,
+                                        statDimensionDayTime,
+                                        statDimensionHourTime,
+                                        outsum,
+                                        areaCode,
+                                        areaName,
+                                        storeAreaIdUuid,
+                                        syCount,
+                                        multiInfo)
         values(#{id}, 37, 27, ${userId}, ${userId}, SYSDATE, SYSDATE, 'Y',
         #{storeIdUuid, javaType=String, jdbcType=VARCHAR},
         #{storeCode, javaType=String, jdbcType=VARCHAR},
